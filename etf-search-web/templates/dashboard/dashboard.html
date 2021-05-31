@@ -1,0 +1,116 @@
+{% extends 'base/base.html' %}
+{% block header %}
+<html lang="en" class="h-100">
+
+</html>
+
+<head>
+  <!-- Bootstrap core CSS -->
+  <style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+  </style>
+  <!-- Custom styles for this template -->
+  <link href="{{ url_for('static', filename='dashboard.css') }}" rel="stylesheet">
+
+</head>
+{% endblock %}
+{% block content %}
+
+<body class="d-flex h-100 text-center">
+
+  <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+      <div>
+        <h3 class="float-md-start mb-0">ETF Search</h3>
+        <nav class="nav nav-masthead justify-content-center float-md-end">
+          <a class="nav-link" href="/">Home</a>
+          <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="px-3">
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
+      </script>
+      <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+      <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          $('#dashboard').DataTable();
+        });
+      </script>
+      <table id="dashboard" class="display" style="width:100%">
+        <thead>
+          <tr>
+            <th>종목코드</th>
+            <th>종목명</th>
+            <th>1개월 수익률(%)</th>
+            <th>3개월 수익률(%)</th>
+            <th>6개월 수익률(%)</th>
+            <th>12개월 수익률(%)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for etf in etflist %}
+          <tr>
+            <td>{{etf['_id']}}</td>
+            <td>{{etf['_source']['etfName']}}</td>
+            <!--1M profit-->
+            {% if etf['_source']['etfProfits']['etfProfit1M'] == "" %}
+            <td style="color:gray">-</td>
+            {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
+            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+            {% else %}
+            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+            {% endif %}
+            <!--3M profit-->
+            {% if etf['_source']['etfProfits']['etfProfit3M'] == "" %}
+            <td style="color:gray">-</td>
+            {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
+            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+            {% else %}
+            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+            {% endif %}
+            <!--6M profit-->
+            {% if etf['_source']['etfProfits']['etfProfit6M'] == "" %}
+            <td style="color:gray">-</td>
+            {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
+            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+            {% else %}
+            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+            {% endif %}
+            <!--12M profit-->
+            {% if etf['_source']['etfProfits']['etfProfit12M'] == "" %}
+            <td style="color:gray">-</td>
+            {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
+            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+            {% else %}
+            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </main>
+    <footer class="mt-auto text-white-50">
+
+    </footer>
+  </div>
+</body>
+{% endblock %}
+
+</html>
