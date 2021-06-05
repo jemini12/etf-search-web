@@ -17,9 +17,12 @@
  */
 
 .cover-container {
-  max-width: 72em;
+  max-width: 72rem;
 }
 
+.table {
+  table-layout: fixed;
+}
 
 /*
  * Header

@@ -20,6 +20,12 @@
                 font-size: 3.5rem;
             }
         }
+
+        @media (max-width: 768px) {
+            #searchresultdiv {
+                font-size: .5rem;
+            }
+        }
     </style>
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
@@ -30,10 +36,10 @@
 
 <body class="d-flex h-100 text-center">
 
-    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-        <header class="mb-auto">
+    <div class="cover-container d-flex w-100 h-100 px-auto mx-auto flex-column">
+        <header class="mb-5">
             <div>
-                <h3 class="float-md-start mb-0">ETF Search</h3>
+                <h3 class="float-md-start mb-3">ETF Search</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                     <a class="nav-link" href="/dashboard">Dashboard</a>
@@ -44,93 +50,122 @@
         <main class="px-3  h-50">
             <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
             <div class="container h-100">
-                <div class="row h-50">
-                    <h3>{{keyword}} 종목이 포함된 ETF를 찾았습니다.</h3>
-                </div>
-                <div class="row">
-                    <div class="input-group mb-3">
-                        <input id="search-keyword" type="text" class="form-control" placeholder="검색어를 입력"
-                            aria-label="검색어를 입력" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-secondary" type="button" id="trigger-search">검색</button>
+                <div class="container h-50">
+                    <div class="row h-50 align-items-center">
+                        <p>{{keyword}} 종목이 포함된 ETF를 찾았습니다.</p>
+                    </div>
+                    <div class="row">
+                        <div class="input-group mb-3">
+                            <input id="search-keyword" type="text" class="form-control" placeholder="검색어를 입력"
+                                aria-label="검색어를 입력" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-secondary" type="button" id="trigger-search">검색</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <script type="text/javascript">
-                // https://stackoverflow.com/questions/46752209/how-render-template-after-post-data-with-ajax-in-flask/46752440
-                $('#trigger-search').click(function () {
-                    let keyword = $('#search-keyword').val()
-                    window.location.href = '/search/' + keyword;
-                })
-            </script>
-            <div id=searchresultdiv>
-                <link rel="stylesheet" type="text/css"
-                    href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-                <script type="text/javascript" charset="utf8"
-                    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
+                <script type="text/javascript">
+                    // https://stackoverflow.com/questions/46752209/how-render-template-after-post-data-with-ajax-in-flask/46752440
+                    $('#trigger-search').click(function () {
+                        let keyword = $('#search-keyword').val()
+                        window.location.href = '/search/' + keyword;
+                    })
+                    $(function () {
+                        $('#search-keyword').keypress(function (e) {
+                            if (e.which == 13) {
+                                //dosomething
+                                let keyword = $('#search-keyword').val()
+                                window.location.href = '/search/' + keyword;
+                            }
+                        })
+                    })
                 </script>
-                <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-                <script type="text/javascript" charset="utf8"
-                    src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
-                </script>
-                <script>
-                    $(document).ready(function () {
-                        $('#searchresult').DataTable();
-                    });
-                </script>
-                <table id="searchresult" class="display" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>종목코드</th>
-                            <th>종목명</th>
-                            <th>{{keyword}} 편입비율(%)</th>
-                            <th>1개월 수익률(%)</th>
-                            <th>3개월 수익률(%)</th>
-                            <th>6개월 수익률(%)</th>
-                            <th>12개월 수익률(%)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for etf in etflist %}
-                        <tr>
-                            <td>{{etf['_id']}}</td>
-                            <td>{{etf['_source']['etfName']}}</td>
-                            <td>{{etf['inner_hits']['etfElements']['hits']['hits'][0]['_source']['stockPortion']}}</td>
-                            <!--1M profit-->
-                            {% if etf['_source']['etfProfits']['etfProfit1M'] == "" %}
-                            <td style="color:gray">-</td>
-                            {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
-                            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                            {% else %}
-                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                            {% endif %}
-                            <!--3M profit-->
-                            {% if etf['_source']['etfProfits']['etfProfit3M'] == "" %}
-                            <td style="color:gray">-</td>
-                            {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
-                            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                            {% else %}
-                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                            {% endif %}
-                            <!--6M profit-->
-                            {% if etf['_source']['etfProfits']['etfProfit6M'] == "" %}
-                            <td style="color:gray">-</td>
-                            {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
-                            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                            {% else %}
-                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                            {% endif %}
-                            <!--12M profit-->
-                            {% if etf['_source']['etfProfits']['etfProfit12M'] == "" %}
-                            <td style="color:gray">-</td>
-                            {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
-                            <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                            {% else %}
-                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                            {% endif %}
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <div id=searchresultdiv>
+                    <link rel="stylesheet" type="text/css"
+                        href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+                    <script type="text/javascript" charset="utf8"
+                        src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
+                    </script>
+                    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js">
+                    </script>
+                    <script type="text/javascript" charset="utf8"
+                        src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
+                    </script>
+                    <script>
+                        $(document).ready(function () {
+                            $('#searchresult').DataTable({
+                                "scrollX": true
+                            });
+                        });
+                    </script>
+                    <table id="searchresult" class="display compact" style="width:100%">
+                        <caption>* 종목(%) : {{keyword}} 편입 비중</caption>
+                        <thead>
+                            <tr>
+                                {% if is_mobile == True %}
+                                <th>ETF</th>
+                                <th style="min-width: 1rem;">종목(%)</th>
+                                <th>3M(%)</th>
+                                <th>12M(%)</th>
+                                {% else %}
+                                <th>ETF</th>
+                                <th>종목(%)</th>
+                                <th>1개월 수익률(%)</th>
+                                <th>3개월 수익률(%)</th>
+                                <th>6개월 수익률(%)</th>
+                                <th>12개월 수익률(%)</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for etf in etflist %}
+                            <tr>
+                                <td>
+                                    <a {% if is_mobile == True %} class="d-inline-block text-truncate"
+                                        style="max-width: 7rem;" {% endif %}
+                                        href="https://finance.daum.net/quotes/A{{etf['_id']}}#home">{{etf['_source']['etfName']}}</a>
+                                </td>
+                                <td>{{etf['inner_hits']['etfElements']['hits']['hits'][0]['_source']['stockPortion']}}
+                                </td>
+                                {% if is_mobile == False %}
+                                <!--1M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit1M'] == "" %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
+                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                {% endif %}
+                                {% endif %}
+                                <!--3M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit3M'] == "" %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
+                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                {% endif %}
+                                {% if is_mobile == False %}
+                                <!--6M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit6M'] == "" %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
+                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                {% endif %}
+                                {% endif %}
+                                <!--12M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit12M'] == "" %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
+                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </main>
         <footer class="mt-auto text-white-50">
