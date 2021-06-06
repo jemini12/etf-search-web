@@ -8,7 +8,6 @@ from flask import (
 from werkzeug.wrappers import response
 bp = Blueprint('index', __name__)
 
-
 @bp.route("/")
 def index():
     useragent = request.user_agent.string
@@ -28,7 +27,7 @@ def index():
     }
     headers = {'Content-Type': 'application/json'}
     rtn = requests.get(
-        "http://192.168.219.108:9200/etf-search-latest/_search", json=query, headers=headers)
+        app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
     etflist = rtn.json()['hits']['hits']
 
     return render_template('index/index.html', etflist=etflist, is_mobile=is_mobile)
@@ -53,7 +52,7 @@ def dashboard():
     }
     headers = {'Content-Type': 'application/json'}
     rtn = requests.get(
-        "http://192.168.219.108:9200/etf-search-latest/_search", json=query, headers=headers)
+        app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
     etflist = rtn.json()['hits']['hits']
     return render_template('dashboard/dashboard.html', etflist=etflist, is_mobile=is_mobile)
 
@@ -91,7 +90,7 @@ def search(keyword):
         }
         headers = {'Content-Type': 'application/json'}
         rtn = requests.get(
-            "http://192.168.219.108:9200/etf-search-latest/_search", json=query, headers=headers)
+            app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
         etflist = rtn.json()['hits']['hits']
         return render_template('index/result.html', etflist=etflist, keyword=keyword, is_mobile=is_mobile)
 
