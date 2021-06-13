@@ -1,5 +1,6 @@
-2021-06-13 19:27:47,943 - main - INFO - Flask app started with {app}
-2021-06-13 19:27:48,894 - main - INFO - user request for /search/카카오 Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1
-2021-06-13 19:27:53,005 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
-2021-06-13 19:27:55,917 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
-2021-06-13 19:28:03,084 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 21:37:31,594 - main - INFO - Flask app started with {app}
+2021-06-13 21:37:32,504 - main - INFO - user request for /search/카카오 Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
+2021-06-13 21:37:41,166 - main - INFO - user request for /search/카카오 Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1
+2021-06-13 21:38:48,823 - main - INFO - user request for /search/카카오 Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1
+2021-06-13 21:39:16,954 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 21:39:28,614 - main - INFO - user request for /search/카카오 Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1

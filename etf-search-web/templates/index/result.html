@@ -42,7 +42,7 @@
 
 <body class="d-flex h-100 text-center">
 
-    <div class="cover-container d-flex w-100 h-100 px-auto mx-auto flex-column">
+    <div class="cover-container overflow-auto d-flex w-100 h-100 px-auto mx-auto flex-column">
         <header class="mb-5">
             {% include 'index/menubar.html' %}
         </header>
@@ -74,6 +74,7 @@
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
                     </script>
                     <script>
+                        
                         $(document).ready(function () {
                             $('#searchresult').DataTable({
                                 "scrollX": true

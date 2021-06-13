@@ -20,13 +20,12 @@
 
 <body>
     <style>
-        BODY {
+        html {
             z-index: 1;
             position: relative;
         }
 
-
-        BODY::after {
+        html::after {
             background-image: url("/static/background.jpg");
             content: "";
             opacity: 0.1;
@@ -38,14 +37,13 @@
             bottom: 0px;
             background-size: cover;
             background-position-x: center;
-            
         }
 
-        @media (max-width: 1386px) {
-            BODY::after {
+        @media (max-width: 768px) {
+            #root::after {
                 background-image: url("/static/background-mob.jpg");
-                background-color: #eaebeb;
-                
+                background-repeat: repeat;
+                overflow-y : scroll;
             }
         }
     </style>
