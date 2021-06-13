@@ -1,1 +1,5 @@
-2021-06-12 13:15:14,415 - main - INFO - Flask app started with {app}
+2021-06-13 16:53:29,536 - main - INFO - Flask app started with {app}
+2021-06-13 16:53:32,560 - main - INFO - user request for / Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Mobile Safari/537.36
+2021-06-13 16:53:37,194 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Mobile Safari/537.36
+2021-06-13 16:54:02,166 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Mobile Safari/537.36
+2021-06-13 16:54:04,528 - main - INFO - user request for / Mozilla/5.0 (Linux; Android 8.0.0; Pixel 2 XL Build/OPD1.170816.004) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Mobile Safari/537.36
