@@ -1,2 +1,5 @@
-2021-06-13 17:33:58,887 - main - INFO - Flask app started with {app}
-2021-06-13 17:34:00,733 - main - INFO - user request for / Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 17:46:53,082 - main - INFO - Flask app started with {app}
+2021-06-13 17:46:54,004 - main - INFO - user request for / Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 17:46:59,023 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 17:47:00,799 - main - INFO - user request for / Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37
+2021-06-13 17:47:03,123 - main - INFO - user request for /search/카카오 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36 Edg/83.0.478.37

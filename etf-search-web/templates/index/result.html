@@ -61,25 +61,7 @@
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    // https://stackoverflow.com/questions/46752209/how-render-template-after-post-data-with-ajax-in-flask/46752440
-                    $('#trigger-search').click(function () {
-                        let value = $('#trigger-search').val() 
-                        if (value.length > 0) {
-                            let keyword = $('#search-keyword').val()
-                            window.location.href = '/search/' + keyword;
-                        }
-                    })
-                    $(function () {
-                        $('#search-keyword').keypress(function (e) {
-                            if (e.which == 13) {
-                                //dosomething
-                                let keyword = $('#search-keyword').val()
-                                window.location.href = '/search/' + keyword;
-                            }
-                        })
-                    })
-                </script>
+                <script type="text/javascript" src="/static/search.js"></script>
                 <div id=searchresultdiv>
                     <link rel="stylesheet" type="text/css"
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
