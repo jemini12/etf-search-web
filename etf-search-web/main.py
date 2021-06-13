@@ -7,7 +7,7 @@ import config
 
 def create_app(development_mode=None):
     # create and configure the app
-    app = Flask(__name__, static_folder='static', static_url_path='', instance_relative_config=True)
+    app = Flask(__name__, static_folder='static', static_url_path='/static', instance_relative_config=True)
 
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     app.logger.setLevel(logging.INFO)
