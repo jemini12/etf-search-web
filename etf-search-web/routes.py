@@ -3,7 +3,7 @@ import requests
 import json
 
 from flask import (
-    Blueprint, render_template, request, jsonify, current_app as app
+    Blueprint, render_template, request, jsonify, send_from_directory, current_app as app
 )
 from werkzeug.wrappers import response
 bp = Blueprint('index', __name__)
@@ -56,6 +56,10 @@ def index():
 #     etflist = rtn.json()['hits']['hits']
 #     return render_template('dashboard/dashboard.html', etflist=etflist, is_mobile=is_mobile)
 
+@bp.route("/sitemap.xml")
+@bp.route("/robots.txt")
+def robot():
+    return send_from_directory(app.static_folder, request.path[1:])
 
 @bp.route("/search/<keyword>", methods=['GET'])
 def search(keyword):
