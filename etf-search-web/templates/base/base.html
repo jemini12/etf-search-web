@@ -26,7 +26,6 @@
         }
 
         BODY::after {
-            width: 100%;
             background-image: url("/static/background.jpg");
             content: "";
             opacity: 0.1;
@@ -37,6 +36,12 @@
             right: 0px;
             bottom: 0px;
             background-size: cover;
+        }
+
+        @media (max-width: 768px) {
+            BODY::after {
+                background-image: url("/static/background-mob.jpg");
+            }
         }
     </style>
     <div class="container col-12" id="root">
