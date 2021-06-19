@@ -112,7 +112,7 @@
                                 </td>
                                 {% if is_mobile == False %}
                                 <!--1M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit1M'] == "" %}
+                                {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
                                 <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
@@ -121,7 +121,7 @@
                                 {% endif %}
                                 {% endif %}
                                 <!--3M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit3M'] == "" %}
+                                {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
                                 <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
@@ -130,7 +130,7 @@
                                 {% endif %}
                                 {% if is_mobile == False %}
                                 <!--6M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit6M'] == "" %}
+                                {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
                                 <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
@@ -139,7 +139,7 @@
                                 {% endif %}
                                 {% endif %}
                                 <!--12M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit12M'] == "" %}
+                                {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
                                 <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
