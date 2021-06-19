@@ -8,6 +8,7 @@ from flask import (
 from werkzeug.wrappers import response
 bp = Blueprint('index', __name__)
 
+
 @bp.route("/")
 def index():
     useragent = request.user_agent.string
@@ -61,6 +62,7 @@ def index():
 def robot():
     return send_from_directory(app.static_folder, request.path[1:])
 
+
 @bp.route("/search/<keyword>", methods=['GET'])
 def search(keyword):
     useragent = request.user_agent.string
@@ -77,19 +79,33 @@ def search(keyword):
                     "path": "etfElements",
                     "inner_hits": {
                         "_source": [
-                            "etfElements.stockName", "etfElements.stockPortion"
+                            "etfElements.stockName",
+                            "etfElements.stockPortion"
                         ]
                     },
                     "query": {
-                        "term": {
-                            "etfElements.stockName.keyword": keyword
+                        "bool": {
+                            "filter": [
+                                {
+                                    "term": {
+                                        "etfElements.stockName.keyword": keyword
+                                    }
+                                },
+                                {
+                                    "exists": {
+                                        "field": "etfElements.stockPortion"
+                                    }
+                                }
+                            ]
                         }
                     }
                 }
             },
             "_source": {
-                "includes": ["etfName", "etfProfits"]
-
+                "includes": [
+                    "etfName",
+                    "etfProfits"
+                ]
             }
         }
         headers = {'Content-Type': 'application/json'}
