@@ -136,7 +136,7 @@
                                 <!--ETF Type-->
                                 <td>
                                     {% for type in etf['_source']['etfTypes'] %}
-                                        {{ type['etfType'] }}<br>
+                                        {{ type['etfType'] }}{% if is_mobile == True %}<br>{% endif %}
                                     {% endfor %}
                                 </td>
                             </tr>

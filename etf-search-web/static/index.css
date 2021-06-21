@@ -16,9 +16,6 @@
  * Base structure
  */
 
-.cover-container {
-  max-width: 72rem;
-}
 
 .table {
   table-layout: fixed;
