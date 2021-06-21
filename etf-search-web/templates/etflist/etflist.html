@@ -22,8 +22,8 @@
         }
 
         @media (max-width: 768px) {
-            #searchresultdiv {
-                font-size: .5rem;
+            #etflistsdiv {
+                font-size: xx-small;
             }
         }
 
@@ -34,7 +34,7 @@
         }
     </style>
     <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='etflist.css') }}" rel="stylesheet">
 
 </head>
 {% endblock %}
@@ -46,23 +46,14 @@
         <header class="mb-5">
             {% include 'index/menubar.html' %}
         </header>
-        <main class="px-0  h-50">
+        <main class="px-0  h-100">
             <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-            <div class="container h-100">
-                <div class="container h-50">
-                    <div class="row h-50 align-items-center">
-                        <h5>{{keyword}} 종목이 포함된 ETF를 찾았습니다.</h5>
-                    </div>
-                    <div class="row">
-                        <div class="input-group mb-3">
-                            <input id="search-keyword" type="text" class="form-control" placeholder="검색어를 입력"
-                                aria-label="검색어를 입력" aria-describedby="button-addon2">
-                            <button class="btn btn-info" type="button" id="trigger-search">검색</button>
-                        </div>
-                    </div>
+            <div class="container h-50">
+                <div class="row h-50 align-items-center">
+                    <h5>전체 ETF 목록입니다.</h5>
                 </div>
                 <script type="text/javascript" src="/static/search.js"></script>
-                <div id=searchresultdiv>
+                <div id=etflistsdiv>
                     <link rel="stylesheet" type="text/css"
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
                     <script type="text/javascript" charset="utf8"
@@ -74,29 +65,27 @@
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
                     </script>
                     <script>
-                        
                         $(document).ready(function () {
-                            $('#searchresult').DataTable({
+                            $('#etflist').DataTable({
                                 "scrollX": true
                             });
                         });
                     </script>
-                    <table id="searchresult" class="display compact" style="width:100%">
-                        <caption>* 종목(%) : {{keyword}} 편입 비중</caption>
+                    <table id="etflist" class="display compact" style="width:100%">
                         <thead>
                             <tr>
                                 {% if is_mobile == True %}
                                 <th>ETF</th>
-                                <th style="min-width: 1rem;">종목(%)</th>
                                 <th>3M(%)</th>
                                 <th>12M(%)</th>
+                                <th>타입</th>
                                 {% else %}
                                 <th>ETF</th>
-                                <th>종목(%)</th>
                                 <th>1개월 수익률(%)</th>
                                 <th>3개월 수익률(%)</th>
                                 <th>6개월 수익률(%)</th>
                                 <th>12개월 수익률(%)</th>
+                                <th>ETF 타입</th>
                                 {% endif %}
                             </tr>
                         </thead>
@@ -108,10 +97,8 @@
                                         style="max-width: 7rem;" {% endif %}
                                         href="https://finance.daum.net/quotes/A{{etf['_id']}}#home">{{etf['_source']['etfName']}}</a>
                                 </td>
-                                <td>{{etf['inner_hits']['etfElements']['hits']['hits'][0]['_source']['stockPortion']}}
-                                </td>
-                                {% if is_mobile == False %}
                                 <!--1M profit-->
+                                {% if is_mobile == False %}
                                 {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
@@ -146,6 +133,12 @@
                                 {% else %}
                                 <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
                                 {% endif %}
+                                <!--ETF Type-->
+                                <td style="font-size: xx-small;">
+                                    {% for type in etf['_source']['etfTypes'] %}
+                                        {{ type['etfType'] }}<br>
+                                    {% endfor %}
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -159,5 +152,6 @@
     </div>
 </body>
 {% endblock %}
+
 
 </html>

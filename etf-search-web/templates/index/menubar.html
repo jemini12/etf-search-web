@@ -19,13 +19,32 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4">
 
-        <a href="/" class="col-6 d-flex align-items-center mb-0 mb-md-0 me-md-auto text-dark text-decoration-none img-fluid">
+        <a href="/"
+            class="col-10 d-flex align-items-center mb-0 mb-md-0 me-md-auto text-dark text-decoration-none img-fluid">
             <img src="/static/logo.png" width="140">
-        </a> 
+        </a>
+        {% if is_mobile == True %}
+        <button class="navbar-toggler col-2" type="button" data-toggle="collapse" data-target="#collapseMenu"
+            aria-expanded="false" aria-controls="collapseMenu">
+            <span class="navbar-toggler-icon"><img src="https://img.icons8.com/material/24/000000/menu--v4.png"/></span>
+        </button>
+        <div class="collapse col-12" id="collapseMenu">
+            <div>
+                <nav class="nav flex-column">
+                    <a class="nav-link" style="color:#41464b" aria-current="page" href="/">ETF 검색</a>
+                    <a class="nav-link" style="color:#41464b" aria-current="page" href="/etflist">ETF 목록</a>
+                </nav>
+            </div>
 
-        <nav class="col-6 nav nav-masthead justify-content-end float-md-end">
-            <a class="nav-link" aria-current="page" href="/">Home</a>
+        </div>
+        {% else %}
+        <nav class="col-1 nav nav-masthead justify-content-end float-md-end">
+            <a class="nav-link" aria-current="page" href="/">ETF 검색</a>
         </nav>
+        <nav class="col-1 nav nav-masthead justify-content-end float-md-end">
+            <a class="nav-link" aria-current="page" href="/etflist">ETF 목록</a>
+        </nav>
+        {% endif %}
 
     </header>
 </div>

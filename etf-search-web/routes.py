@@ -34,28 +34,28 @@ def index():
     return render_template('index/index.html', etflist=etflist, is_mobile=is_mobile)
 
 
-# @bp.route("/dashboard")
-# def dashboard():
-#     useragent = request.user_agent.string
-#     app.logger.info("user request for /dashboard " + useragent)
-#     if "mobile" in useragent.lower():
-#         is_mobile = True
-#     else:
-#         is_mobile = False
-#     query = {
-#         "size": 1000,
-#         "query": {
-#             "match_all": {}
-#         },
-#         "_source": {
-#             "includes": ["etfName", "etfProfits"]
-#         }
-#     }
-#     headers = {'Content-Type': 'application/json'}
-#     rtn = requests.get(
-#         app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
-#     etflist = rtn.json()['hits']['hits']
-#     return render_template('dashboard/dashboard.html', etflist=etflist, is_mobile=is_mobile)
+@bp.route("/etflist")
+def dashboard():
+    useragent = request.user_agent.string
+    app.logger.info("user request for /dashboard " + useragent)
+    if "mobile" in useragent.lower():
+        is_mobile = True
+    else:
+        is_mobile = False
+    query = {
+        "size": 1000,
+        "query": {
+            "match_all": {}
+        },
+        "_source": {
+            "includes": ["etfName", "etfProfits", "etfTypes.etfType"]
+        }
+    }
+    headers = {'Content-Type': 'application/json'}
+    rtn = requests.get(
+        app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
+    etflist = rtn.json()['hits']['hits']
+    return render_template('etflist/etflist.html', etflist=etflist, is_mobile=is_mobile)
 
 @bp.route("/sitemap.xml")
 @bp.route("/robots.txt")
