@@ -49,7 +49,7 @@
         <main class="px-0  h-100">
             <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
             <div class="container h-50">
-                <div class="row h-50 align-items-center">
+                <div class="row h-25 align-items-center">
                     <h5>전체 ETF 목록입니다.</h5>
                 </div>
                 <script type="text/javascript" src="/static/search.js"></script>
@@ -58,19 +58,41 @@
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
-                    </script>
+                        </script>
                     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js">
                     </script>
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
-                    </script>
+                        </script>
                     <script>
                         $(document).ready(function () {
-                            $('#etflist').DataTable({
-                                "scrollX": true
+                            var table = $('#etflist').DataTable({
+                                "scrollX": true,
+                                "columnDefs": [
+                                    {
+                                        "targets": {% if is_mobile == True %}[4]{% else %}[6]{% endif %},
+                                        "visible": false,
+                                        "searchable": false
+                                    }]
+                            });
+                            $('a.toggle-vis').on('click', function (e) {
+                                e.preventDefault();
+
+                                // Get the column API object
+                                let origincolumn = table.column($(this).attr('origin-column'));
+                                let togglecolumn = table.column($(this).attr('toggle-column'));
+
+                                // Toggle the visibility
+                                origincolumn.visible(!origincolumn.visible());
+                                togglecolumn.visible(!togglecolumn.visible());
                             });
                         });
                     </script>
+                    {% if is_mobile == True %}
+                    Toggle column: <a class="toggle-vis" origin-column="4" toggle-column="3">평균지표</a>
+                    {% else %}
+                    Toggle column: <a class="toggle-vis" origin-column="6" toggle-column="5">평균 PER/PBR/ROE</a>
+                    {% endif %}
                     <table id="etflist" class="display compact" style="width:100%">
                         <thead>
                             <tr>
@@ -79,6 +101,7 @@
                                 <th>3M(%)</th>
                                 <th>12M(%)</th>
                                 <th>타입</th>
+                                <th>평균지표</th>
                                 {% else %}
                                 <th>ETF</th>
                                 <th>1개월 수익률(%)</th>
@@ -86,6 +109,7 @@
                                 <th>6개월 수익률(%)</th>
                                 <th>12개월 수익률(%)</th>
                                 <th>ETF 타입</th>
+                                <th>PER/PBR/ROE 평균</th>
                                 {% endif %}
                             </tr>
                         </thead>
@@ -93,7 +117,7 @@
                             {% for etf in etflist %}
                             <tr>
                                 <td>
-                                    <a {% if is_mobile == True %} class="d-inline-block text-truncate"
+                                    <a {% if is_mobile==True %} class="d-inline-block text-truncate"
                                         style="max-width: 7rem;" {% endif %}
                                         href="https://finance.daum.net/quotes/A{{etf['_id']}}#home">{{etf['_source']['etfName']}}</a>
                                 </td>
@@ -101,44 +125,46 @@
                                 {% if is_mobile == False %}
                                 {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
                                 <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% endif %}
-                                {% endif %}
-                                <!--3M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                {% endif %}
-                                {% if is_mobile == False %}
-                                <!--6M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% endif %}
-                                {% endif %}
-                                <!--12M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                                {% endif %}
-                                <!--ETF Type-->
-                                <td>
-                                    {% for type in etf['_source']['etfTypes'] %}
-                                        {{ type['etfType'] }}{% if is_mobile == True %}<br>{% endif %}
-                                    {% endfor %}
-                                </td>
+                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %} <td style="color:blue">
+                                    {{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% else %}
+                                    <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% endif %}
+                                    {% endif %}
+                                    <!--3M profit-->
+                                    {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
+                                    <td style="color:gray">-</td>
+                                    {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %} <td
+                                        style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                        {% else %}
+                                        <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                        {% endif %}
+                                        {% if is_mobile == False %}
+                                        <!--6M profit-->
+                                        {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
+                                        <td style="color:gray">-</td>
+                                        {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td
+                                            style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                            {% else %}
+                                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                            {% endif %}
+                                            {% endif %}
+                                            <!--12M profit-->
+                                            {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
+                                            <td style="color:gray">-</td>
+                                            {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %} <td
+                                                style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+                                                {% else %}
+                                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}
+                                                </td>
+                                                {% endif %}
+                                                <!--ETF Type-->
+                                                <td>
+                                                    {% for type in etf['_source']['etfTypes'] %}
+                                                    {{ type['etfType'] }}{% if is_mobile == True %}<br>{% endif %}
+                                                    {% endfor %}
+                                                </td>
+                                                <td>0</td>
                             </tr>
                             {% endfor %}
                         </tbody>
