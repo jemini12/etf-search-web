@@ -48,14 +48,16 @@ def dashboard():
             "match_all": {}
         },
         "_source": {
-            "includes": ["etfName", "etfProfits", "etfTypes.etfType"]
-        }
+            "excludes": ["etfDescription", "etfElements"]
+        },
+        "fields": ["perAvg", "roeAvg", "pbrAvg"]
     }
     headers = {'Content-Type': 'application/json'}
     rtn = requests.get(
         app.config['ES_URL'] + "etf-search-latest/_search", json=query, headers=headers)
     etflist = rtn.json()['hits']['hits']
     return render_template('etflist/etflist.html', etflist=etflist, is_mobile=is_mobile)
+
 
 @bp.route("/sitemap.xml")
 @bp.route("/robots.txt")

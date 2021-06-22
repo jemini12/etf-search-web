@@ -53,6 +53,11 @@
                     <h5>전체 ETF 목록입니다.</h5>
                 </div>
                 <script type="text/javascript" src="/static/search.js"></script>
+                {% if is_mobile == True %}
+                    <div id="columnDiv" align="right">컬럼 변경: <a class="toggle-vis" origin-column="4" toggle-column="3">PER/PBR/ROE Avg&#8596;Type</a></div>
+                    {% else %}
+                    <div id="columnDiv" align="right">컬럼 변경: <a class="toggle-vis" origin-column="6" toggle-column="5">PER/PBR/ROE 평균&#8596;ETF 타입</a></div>
+                    {% endif %}
                 <div id=etflistsdiv>
                     <link rel="stylesheet" type="text/css"
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
@@ -65,43 +70,44 @@
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
                         </script>
                     <script>
+                        $('<div class="loading">Loading</div>').appendTo('#etflistsdiv');
                         $(document).ready(function () {
                             var table = $('#etflist').DataTable({
+                                "initComplete": function (settings, json) {
+                                    $('div.loading').remove();
+                                },
                                 "scrollX": true,
                                 "columnDefs": [
                                     {
                                         "targets": {% if is_mobile == True %}[4]{% else %}[6]{% endif %},
-                                        "visible": false,
-                                        "searchable": false
+                            "visible": false,
+                            "searchable": false,
+                            "orderable": false
                                     }]
                             });
-                            $('a.toggle-vis').on('click', function (e) {
-                                e.preventDefault();
+                        $('a.toggle-vis').on('click', function (e) {
+                            e.preventDefault();
 
-                                // Get the column API object
-                                let origincolumn = table.column($(this).attr('origin-column'));
-                                let togglecolumn = table.column($(this).attr('toggle-column'));
+                            // Get the column API object
+                            let origincolumn = table.column($(this).attr('origin-column'));
+                            let togglecolumn = table.column($(this).attr('toggle-column'));
 
-                                // Toggle the visibility
-                                origincolumn.visible(!origincolumn.visible());
-                                togglecolumn.visible(!togglecolumn.visible());
-                            });
+                            // Toggle the visibility
+                            origincolumn.visible(!origincolumn.visible());
+                            togglecolumn.visible(!togglecolumn.visible());
+                        });
                         });
                     </script>
-                    {% if is_mobile == True %}
-                    Toggle column: <a class="toggle-vis" origin-column="4" toggle-column="3">평균지표</a>
-                    {% else %}
-                    Toggle column: <a class="toggle-vis" origin-column="6" toggle-column="5">평균 PER/PBR/ROE</a>
-                    {% endif %}
-                    <table id="etflist" class="display compact" style="width:100%">
+                    
+                    <table id="etflist" class="display compact" style="width:100%;">
                         <thead>
                             <tr>
                                 {% if is_mobile == True %}
                                 <th>ETF</th>
                                 <th>3M(%)</th>
                                 <th>12M(%)</th>
-                                <th>타입</th>
-                                <th>평균지표</th>
+                                <th>Type</th>
+                                <th>PER/PBR/ROE Avg</th>
                                 {% else %}
                                 <th>ETF</th>
                                 <th>1개월 수익률(%)</th>
@@ -164,7 +170,26 @@
                                                     {{ type['etfType'] }}{% if is_mobile == True %}<br>{% endif %}
                                                     {% endfor %}
                                                 </td>
-                                                <td>0</td>
+                                                <td>
+                                                    {% if etf['fields']['perAvg'][0] != "NaN" and
+                                                    etf['fields']['perAvg'][0] > 0 %}
+                                                    {{ etf['fields']['perAvg'][0]|float|round(1,'floor') }} /
+                                                    {% else %}
+                                                    - /
+                                                    {% endif %}
+                                                    {% if etf['fields']['pbrAvg'][0] != "NaN" and
+                                                    etf['fields']['pbrAvg'][0] > 0 %}
+                                                    {{ etf['fields']['pbrAvg'][0]|float|round(1,'floor') }} /
+                                                    {% else %}
+                                                    - /
+                                                    {% endif %}
+                                                    {% if etf['fields']['roeAvg'][0] != "NaN" and
+                                                    etf['fields']['roeAvg'][0] > 0 %}
+                                                    {{ etf['fields']['roeAvg'][0]|float|round(1,'floor') }}
+                                                    {% else %}
+                                                    -
+                                                    {% endif %}
+                                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
