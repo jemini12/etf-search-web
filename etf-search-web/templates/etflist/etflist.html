@@ -58,7 +58,7 @@
                 </div>
                 <script type="text/javascript" src="/static/search.js"></script>
                 {% if is_mobile == True %}
-                    <div id="columnDiv" align="right" class="my-3"><a class="toggle-vis" origin-column="4" toggle-column="3">컬럼 변경 : PER/PBR/ROE Avg&#8596;Type</a></div>
+                    <div id="columnDiv" align="right" class="my-3"><a class="toggle-vis" origin-column="4" toggle-column="3">컬럼 변경 : PER Avg&#8596;Type</a></div>
                     {% else %}
                     <div id="columnDiv" align="right" class="my-3"><a class="toggle-vis" origin-column="6" toggle-column="5">컬럼 변경 : PER/PBR/ROE 평균&#8596;ETF 타입</a></div>
                     {% endif %}
@@ -74,7 +74,7 @@
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
                         </script>
                     <script>
-                        $('<div class="loading">Loading</div>').appendTo('#etflistsdiv');
+                        $('<div class="loading">Loading ... </div>').appendTo('#etflistsdiv');
                         $(document).ready(function () {
                             var table = $('#etflist').DataTable({
                                 "initComplete": function (settings, json) {
@@ -111,7 +111,7 @@
                                 <th>3M(%)</th>
                                 <th>12M(%)</th>
                                 <th>Type</th>
-                                <th>PER/PBR/ROE Avg</th>
+                                <th>PER Avg</th>
                                 {% else %}
                                 <th>ETF</th>
                                 <th>1개월 수익률(%)</th>
@@ -177,21 +177,25 @@
                                                 <td>
                                                     {% if etf['fields']['perAvg'][0] != "NaN" and
                                                     etf['fields']['perAvg'][0] > 0 %}
-                                                    {{ etf['fields']['perAvg'][0]|float|round(1,'floor') }} /
+                                                    {{ etf['fields']['perAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
-                                                    - /
+                                                    -
                                                     {% endif %}
+                                                    {% if is_mobile == False %}
+                                                    /
                                                     {% if etf['fields']['pbrAvg'][0] != "NaN" and
                                                     etf['fields']['pbrAvg'][0] > 0 %}
-                                                    {{ etf['fields']['pbrAvg'][0]|float|round(1,'floor') }} /
+                                                    {{ etf['fields']['pbrAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
-                                                    - /
+                                                    -
                                                     {% endif %}
+                                                    /
                                                     {% if etf['fields']['roeAvg'][0] != "NaN" and
                                                     etf['fields']['roeAvg'][0] > 0 %}
                                                     {{ etf['fields']['roeAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
                                                     -
+                                                    {% endif %}
                                                     {% endif %}
                                                 </td>
                             </tr>

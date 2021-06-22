@@ -35,9 +35,9 @@ def index():
 
 
 @bp.route("/etflist")
-def dashboard():
+def etflist():
     useragent = request.user_agent.string
-    app.logger.info("user request for /dashboard " + useragent)
+    app.logger.info("user request for /etflist " + useragent)
     if "mobile" in useragent.lower():
         is_mobile = True
     else:
