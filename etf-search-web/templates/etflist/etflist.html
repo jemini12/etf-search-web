@@ -25,6 +25,10 @@
             #etflistsdiv {
                 font-size: xx-small;
             }
+            main {
+                font-size: xx-small;
+            }
+            
         }
 
         @media (max-width: 768px) {
@@ -54,9 +58,9 @@
                 </div>
                 <script type="text/javascript" src="/static/search.js"></script>
                 {% if is_mobile == True %}
-                    <div id="columnDiv" align="right">컬럼 변경: <a class="toggle-vis" origin-column="4" toggle-column="3">PER/PBR/ROE Avg&#8596;Type</a></div>
+                    <div id="columnDiv" align="right" class="my-3"><a class="toggle-vis" origin-column="4" toggle-column="3">컬럼 변경 : PER/PBR/ROE Avg&#8596;Type</a></div>
                     {% else %}
-                    <div id="columnDiv" align="right">컬럼 변경: <a class="toggle-vis" origin-column="6" toggle-column="5">PER/PBR/ROE 평균&#8596;ETF 타입</a></div>
+                    <div id="columnDiv" align="right" class="my-3"><a class="toggle-vis" origin-column="6" toggle-column="5">컬럼 변경 : PER/PBR/ROE 평균&#8596;ETF 타입</a></div>
                     {% endif %}
                 <div id=etflistsdiv>
                     <link rel="stylesheet" type="text/css"
