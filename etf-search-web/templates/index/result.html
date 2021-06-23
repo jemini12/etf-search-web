@@ -55,26 +55,26 @@
                     </div>
                     <div class="row">
                         <div class="input-group mb-3">
-                            <input id="search-keyword" type="text" class="form-control" placeholder="검색어를 입력"
-                                aria-label="검색어를 입력" aria-describedby="button-addon2">
+                            <input id="search-keyword" type="text" class="form-control shadow-none"
+                                placeholder="검색어를 입력" aria-label="검색어를 입력" aria-describedby="button-addon2">
                             <button class="btn btn-info" type="button" id="trigger-search">검색</button>
                         </div>
                     </div>
                 </div>
-                <script type="text/javascript" src="/static/search.js"></script>
+
                 <div id=searchresultdiv>
                     <link rel="stylesheet" type="text/css"
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
-                    </script>
+                        </script>
                     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js">
                     </script>
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
-                    </script>
+                        </script>
                     <script>
-                        
+
                         $(document).ready(function () {
                             $('#searchresult').DataTable({
                                 "scrollX": true
@@ -104,7 +104,7 @@
                             {% for etf in etflist %}
                             <tr>
                                 <td>
-                                    <a {% if is_mobile == True %} class="d-inline-block text-truncate"
+                                    <a {% if is_mobile==True %} class="d-inline-block text-truncate"
                                         style="max-width: 7rem;" {% endif %}
                                         href="https://finance.daum.net/quotes/A{{etf['_id']}}#home">{{etf['_source']['etfName']}}</a>
                                 </td>
@@ -114,44 +114,48 @@
                                 <!--1M profit-->
                                 {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
                                 <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% endif %}
-                                {% endif %}
-                                <!--3M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                {% endif %}
-                                {% if is_mobile == False %}
-                                <!--6M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% endif %}
-                                {% endif %}
-                                <!--12M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %}
-                                <td style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                                {% endif %}
+                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %} <td style="color:blue">
+                                    {{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% else %}
+                                    <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% endif %}
+                                    {% endif %}
+                                    <!--3M profit-->
+                                    {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
+                                    <td style="color:gray">-</td>
+                                    {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %} <td
+                                        style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                        {% else %}
+                                        <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                        {% endif %}
+                                        {% if is_mobile == False %}
+                                        <!--6M profit-->
+                                        {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
+                                        <td style="color:gray">-</td>
+                                        {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td
+                                            style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                            {% else %}
+                                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                            {% endif %}
+                                            {% endif %}
+                                            <!--12M profit-->
+                                            {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
+                                            <td style="color:gray">-</td>
+                                            {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %} <td
+                                                style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+                                                {% else %}
+                                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}
+                                                </td>
+                                                {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+            <script type="text/javascript" src="/static/search.js"></script>
         </main>
         <footer class="mt-auto text-white-50">
 

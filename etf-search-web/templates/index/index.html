@@ -42,19 +42,23 @@
     </header>
 
     <main class="px-0  h-100">
+
       <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
       <div class="container h-50">
         <div class="row h-50 align-items-center">
           <h5>원하는 종목이 포함된 ETF를 찾습니다.</h5>
         </div>
         <div class="row">
+
           <div class="input-group mb-3">
-            <input id="search-keyword" type="text" class="form-control" placeholder="검색어를 입력" aria-label="검색어를 입력"
-              aria-describedby="button-addon2">
+            <input id="search-keyword" type="text" class="form-control shadow-none" placeholder="검색어를 입력"
+              aria-label="검색어를 입력" aria-describedby="button-addon2">
             <button class="btn btn-info" type="button" id="trigger-search">검색</button>
           </div>
         </div>
       </div>
+      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
       <script type="text/javascript" src="/static/search.js"></script>
     </main>
     <footer class="mt-auto mb-3 text-black-50">

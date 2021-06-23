@@ -5,7 +5,8 @@ $('#trigger-search').click(function () {
         let keyword = $('#search-keyword').val()
         window.location.href = '/search/' + keyword;
     }
-})
+});
+
 $(function () {
     $('#search-keyword').keypress(function (e) {
         if (e.which == 13) {
@@ -18,4 +19,34 @@ $(function () {
             }
         }
     })
-})
+});
+
+let autocompleteresult = [];
+
+
+$(function () {
+    let cache = {};
+    $("#search-keyword").autocomplete({
+        minLength: 2,
+        source: function (request, response) {
+            let term = request.term;
+            console.log(term)
+            if (term in cache) {
+                response(cache[term] );
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.responseType='json';
+            let keyword = $("#search-keyword").val();
+            xhr.open("GET", "/autocomplete/" + keyword, true);
+            xhr.send();
+            xhr.onload = function () {
+                // xhr 객체의 status 값을 검사한다.
+                if (xhr.status === 200) {
+                    cache[term] = xhr.response;
+                    response(xhr.response);
+                }
+            }
+        }
+    });
+});

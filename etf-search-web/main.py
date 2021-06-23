@@ -17,7 +17,7 @@ def create_app(development_mode=None):
     file_handler.setFormatter(formatter)
     app.logger.addHandler(stream_handler)
     app.logger.addHandler(file_handler)
-    app.logger.info("Flask app started with {app}")
+    app.logger.info("Flask app started with " + __name__)
 
     if development_mode is None:
         app.config.from_object(config.DevelopmentConfig)

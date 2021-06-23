@@ -65,6 +65,42 @@ def robot():
     return send_from_directory(app.static_folder, request.path[1:])
 
 
+@bp.route("/autocomplete/<keyword>", methods=['GET'])
+def autocomplete(keyword):
+    app.logger.info(f"frontend request for /autocomplete/{keyword} ")
+    try:
+        query = {
+            "size": 5,
+            "query": {
+                "wildcard": {
+                    "stockName": keyword.upper() + "*"
+                }
+            },
+            "_source": {
+                "includes": ["stockName"]
+            },
+            "sort": [
+                {
+                    "stockName": {
+                        "order": "asc"
+                    }
+                }
+            ]
+        }
+        headers = {'Content-Type': 'application/json'}
+        rtn = requests.get(
+            app.config['ES_URL'] + "stock-data-latest/_search", json=query, headers=headers)
+        stocklist = rtn.json()['hits']['hits']
+        autocompleteList = []
+        for stock in stocklist:
+            autocompleteList.append(stock['_source']['stockName'])
+            
+        return make_response(json.dumps(autocompleteList, ensure_ascii=False), 200)
+    except Exception as e:
+        app.logger.info(e)
+        return make_response("Internal Error", 500)
+
+
 @bp.route("/search/<keyword>", methods=['GET'])
 def search(keyword):
     useragent = request.user_agent.string
