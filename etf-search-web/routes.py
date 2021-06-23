@@ -70,20 +70,31 @@ def autocomplete(keyword):
     app.logger.info(f"frontend request for /autocomplete/{keyword} ")
     try:
         query = {
-            "size": 5,
+            "size": 10,
             "query": {
-                "wildcard": {
-                    "stockName": keyword.upper() + "*"
+                "bool": {
+                "filter": [
+                    {
+                    "wildcard": {
+                        "stockName": {
+                        "value": f"{keyword}*",
+                        "case_insensitive": "true"
+                        }
+                    }
+                    }
+                ]
                 }
             },
             "_source": {
-                "includes": ["stockName"]
+                "includes": [
+                "stockName"
+                ]
             },
             "sort": [
                 {
-                    "stockName": {
-                        "order": "asc"
-                    }
+                "code": {
+                    "order": "asc"
+                }
                 }
             ]
         }

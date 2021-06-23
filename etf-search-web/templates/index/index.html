@@ -26,6 +26,13 @@
         font-size: 1rem;
       }
     }
+
+    .ui-autocomplete {
+      max-height: 12rem;
+      overflow-y: auto;
+      /* prevent horizontal scrollbar */
+      overflow-x: hidden;
+    }
   </style>
   <!-- Custom styles for this template -->
   <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">

@@ -23,11 +23,9 @@ $(function () {
 
 let autocompleteresult = [];
 
-
 $(function () {
     let cache = {};
     $("#search-keyword").autocomplete({
-        minLength: 2,
         source: function (request, response) {
             let term = request.term;
             console.log(term)

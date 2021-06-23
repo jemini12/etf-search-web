@@ -32,6 +32,13 @@
                 font-size: 1rem;
             }
         }
+
+        .ui-autocomplete {
+            max-height: 12rem;
+            overflow-y: auto;
+            /* prevent horizontal scrollbar */
+            overflow-x: hidden;
+        }
     </style>
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
@@ -67,14 +74,13 @@
                         href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js">
-                        </script>
+                    </script>
                     <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js">
                     </script>
                     <script type="text/javascript" charset="utf8"
                         src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js">
-                        </script>
+                    </script>
                     <script>
-
                         $(document).ready(function () {
                             $('#searchresult').DataTable({
                                 "scrollX": true
@@ -116,37 +122,37 @@
                                 <td style="color:gray">-</td>
                                 {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %} <td style="color:blue">
                                     {{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                    {% else %}
-                                    <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                    {% endif %}
-                                    {% endif %}
-                                    <!--3M profit-->
-                                    {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
-                                    <td style="color:gray">-</td>
-                                    {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %} <td
-                                        style="color:blue">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                        {% else %}
-                                        <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
-                                        {% endif %}
-                                        {% if is_mobile == False %}
-                                        <!--6M profit-->
-                                        {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
-                                        <td style="color:gray">-</td>
-                                        {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td
-                                            style="color:blue">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                            {% else %}
-                                            <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                            {% endif %}
-                                            {% endif %}
-                                            <!--12M profit-->
-                                            {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
-                                            <td style="color:gray">-</td>
-                                            {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %} <td
-                                                style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
-                                                {% else %}
-                                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}
-                                                </td>
-                                                {% endif %}
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                {% endif %}
+                                {% endif %}
+                                <!--3M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit3M']|float < 0 %} <td style="color:blue">
+                                    {{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
+                                {% endif %}
+                                {% if is_mobile == False %}
+                                <!--6M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td style="color:blue">
+                                    {{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                {% endif %}
+                                {% endif %}
+                                <!--12M profit-->
+                                {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
+                                <td style="color:gray">-</td>
+                                {% elif etf['_source']['etfProfits']['etfProfit12M']|float < 0 %} <td
+                                    style="color:blue">{{etf['_source']['etfProfits']['etfProfit12M']}}</td>
+                                {% else %}
+                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}
+                                </td>
+                                {% endif %}
                             </tr>
                             {% endfor %}
                         </tbody>
