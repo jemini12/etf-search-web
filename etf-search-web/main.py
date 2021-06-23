@@ -13,7 +13,7 @@ def create_app(development_mode=None):
     app.logger.setLevel(logging.INFO)
     stream_handler = logging.StreamHandler()
     stream_handler.setFormatter(formatter)
-    file_handler = logging.FileHandler('app.log', mode='w')
+    file_handler = logging.FileHandler('app.log', mode='a')
     file_handler.setFormatter(formatter)
     app.logger.addHandler(stream_handler)
     app.logger.addHandler(file_handler)
@@ -38,4 +38,4 @@ def create_app(development_mode=None):
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(port='8080')
+    app.run(port='8888')
