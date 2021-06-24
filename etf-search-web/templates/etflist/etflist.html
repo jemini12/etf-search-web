@@ -125,6 +125,7 @@
                         </thead>
                         <tbody>
                             {% for etf in etflist %}
+                            {% if etf['_source']['etfName'] %}
                             <tr>
                                 <td>
                                     <a {% if is_mobile==True %} class="d-inline-block text-truncate"
@@ -199,6 +200,7 @@
                                                     {% endif %}
                                                 </td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>
