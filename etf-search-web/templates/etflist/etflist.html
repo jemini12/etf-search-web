@@ -176,23 +176,20 @@
                                                     {% endfor %}
                                                 </td>
                                                 <td>
-                                                    {% if etf['fields']['perAvg'][0] != "NaN" and
-                                                    etf['fields']['perAvg'][0] > 0 %}
+                                                    {% if 'fields' in etf and 'perAvg' in etf['fields'] %}
                                                     {{ etf['fields']['perAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
                                                     -
                                                     {% endif %}
                                                     {% if is_mobile == False %}
                                                     /
-                                                    {% if etf['fields']['pbrAvg'][0] != "NaN" and
-                                                    etf['fields']['pbrAvg'][0] > 0 %}
+                                                    {% if 'fields' in etf and 'pbrAvg' in etf['fields'] %}
                                                     {{ etf['fields']['pbrAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
                                                     -
                                                     {% endif %}
                                                     /
-                                                    {% if etf['fields']['roeAvg'][0] != "NaN" and
-                                                    etf['fields']['roeAvg'][0] > 0 %}
+                                                    {% if 'fields' in etf and 'roeAvg' in etf['fields'] %}
                                                     {{ etf['fields']['roeAvg'][0]|float|round(1,'floor') }}
                                                     {% else %}
                                                     -
