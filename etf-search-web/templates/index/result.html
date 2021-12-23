@@ -84,7 +84,7 @@
                         $(document).ready(function () {
                             $('#searchresult').DataTable({
                                 "scrollX": true,
-                                "order": [[ 1, "desc" ]]
+                                "order": [[ 1, "desc" ]],
                             });
                         });
                     </script>
@@ -97,6 +97,7 @@
                                 <th style="min-width: 1rem;">종목(%)</th>
                                 <th>3M(%)</th>
                                 <th>12M(%)</th>
+                                <th>PER Avg</th>
                                 {% else %}
                                 <th>ETF</th>
                                 <th>종목(%)</th>
@@ -104,6 +105,7 @@
                                 <th>3개월 수익률(%)</th>
                                 <th>6개월 수익률(%)</th>
                                 <th>12개월 수익률(%)</th>
+                                <th>PER/PBR/ROE 평균</th>
                                 {% endif %}
                             </tr>
                         </thead>
@@ -118,14 +120,14 @@
                                 <td>{{etf['inner_hits']['etfElements']['hits']['hits'][0]['_source']['stockPortion']}}
                                 </td>
                                 {% if is_mobile == False %}
-                                <!--1M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %} <td style="color:blue">
-                                    {{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
-                                {% endif %}
+                                    <!--1M profit-->
+                                    {% if etf['_source']['etfProfits']['etfProfit1M'] == None %}
+                                    <td style="color:gray">-</td>
+                                    {% elif etf['_source']['etfProfits']['etfProfit1M']|float < 0 %} <td style="color:blue">
+                                        {{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% else %}
+                                    <td style="color:red">{{etf['_source']['etfProfits']['etfProfit1M']}}</td>
+                                    {% endif %}
                                 {% endif %}
                                 <!--3M profit-->
                                 {% if etf['_source']['etfProfits']['etfProfit3M'] == None %}
@@ -136,14 +138,14 @@
                                 <td style="color:red">{{etf['_source']['etfProfits']['etfProfit3M']}}</td>
                                 {% endif %}
                                 {% if is_mobile == False %}
-                                <!--6M profit-->
-                                {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
-                                <td style="color:gray">-</td>
-                                {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td style="color:blue">
-                                    {{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% else %}
-                                <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
-                                {% endif %}
+                                    <!--6M profit-->
+                                    {% if etf['_source']['etfProfits']['etfProfit6M'] == None %}
+                                    <td style="color:gray">-</td>
+                                    {% elif etf['_source']['etfProfits']['etfProfit6M']|float < 0 %} <td style="color:blue">
+                                        {{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                    {% else %}
+                                    <td style="color:red">{{etf['_source']['etfProfits']['etfProfit6M']}}</td>
+                                    {% endif %}
                                 {% endif %}
                                 <!--12M profit-->
                                 {% if etf['_source']['etfProfits']['etfProfit12M'] == None %}
@@ -154,6 +156,29 @@
                                 <td style="color:red">{{etf['_source']['etfProfits']['etfProfit12M']}}
                                 </td>
                                 {% endif %}
+                                <td>
+                                    {% if 'fields' in etf and 'perAvg' in etf['fields'] %}
+                                    {{ etf['fields']['perAvg'][0]|float|round(1,'floor') }}
+                                    {% else %}
+                                    -
+                                    {% endif %}
+                                    {% if is_mobile == False %}
+                                        /
+                                        {% if 'fields' in etf and 'pbrAvg' in etf['fields'] %}
+                                        {{ etf['fields']['pbrAvg'][0]|float|round(1,'floor') }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                        /
+                                        {% if 'fields' in etf and 'roeAvg' in etf['fields'] %}
+                                        {{ etf['fields']['roeAvg'][0]|float|round(1,'floor') }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                    
+                                    
                             </tr>
                             {% endfor %}
                         </tbody>

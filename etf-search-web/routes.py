@@ -155,7 +155,8 @@ def search(keyword):
                     "etfName",
                     "etfProfits"
                 ]
-            }
+            },
+            "fields": ["perAvg", "roeAvg", "pbrAvg"]
         }
         headers = {'Content-Type': 'application/json'}
         rtn = requests.get(
